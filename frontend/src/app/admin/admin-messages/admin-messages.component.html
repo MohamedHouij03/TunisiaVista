@@ -1,0 +1,106 @@
+<div class="admin-content">
+  <div class="admin-topbar">
+    <div class="d-flex align-items-center gap-3">
+      <a routerLink="/admin/dashboard" class="btn btn-sm btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Dashboard</a>
+      <h5 class="mb-0" style="font-family:var(--font-heading);color:var(--clr-navy);">Contact Messages</h5>
+      <span *ngIf="newCount > 0" class="badge bg-danger">{{newCount}} new</span>
+    </div>
+  </div>
+
+  <div class="p-4">
+    <div *ngIf="successMsg" class="alert alert-success mb-4" style="border-radius:var(--radius-md);">
+      <i class="bi bi-check-circle me-2"></i>{{successMsg}}
+    </div>
+
+    <div class="row g-4">
+      <!-- Message list -->
+      <div class="col-lg-5">
+        <div class="data-table">
+          <div class="d-flex gap-2 p-3" style="border-bottom:1px solid var(--clr-border);">
+            <button class="btn btn-sm" [class.btn-primary]="filterStatus==='all'" [class.btn-outline-secondary]="filterStatus!=='all'" (click)="filterStatus='all'">All ({{messages.length}})</button>
+            <button class="btn btn-sm" [class.btn-danger]="filterStatus==='new'" [class.btn-outline-secondary]="filterStatus!=='new'" (click)="filterStatus='new'">New ({{newCount}})</button>
+            <button class="btn btn-sm" [class.btn-secondary]="filterStatus==='read'" [class.btn-outline-secondary]="filterStatus!=='read'" (click)="filterStatus='read'">Read</button>
+          </div>
+          <div *ngIf="loading" class="text-center py-5"><div class="spinner-border text-primary"></div></div>
+          <div *ngIf="!loading">
+            <div *ngIf="filtered.length === 0" class="text-center py-5" style="color:var(--clr-text-muted);">
+              <i class="bi bi-inbox" style="font-size:2rem;"></i>
+              <p class="mt-2 mb-0">No messages</p>
+            </div>
+            <div *ngFor="let m of filtered"
+                 class="msg-list-item"
+                 [class.active]="selected === m"
+                 [class.unread]="m.status === 'new'"
+                 (click)="open(m)">
+              <div class="d-flex justify-content-between align-items-start">
+                <div class="d-flex align-items-center gap-2">
+                  <div class="msg-avatar">{{m.name.charAt(0)}}</div>
+                  <div>
+                    <div style="font-weight:600;font-size:.875rem;color:var(--clr-navy);">{{m.name}}</div>
+                    <div style="font-size:.75rem;color:var(--clr-text-muted);">{{m.email}}</div>
+                  </div>
+                </div>
+                <div class="d-flex flex-column align-items-end gap-1">
+                  <span style="font-size:.65rem;padding:.15rem .5rem;border-radius:50px;font-weight:700;"
+                        [style.background]="m.status==='new'?'rgba(220,38,38,.1)':m.status==='replied'?'rgba(5,150,105,.1)':'rgba(107,114,128,.1)'"
+                        [style.color]="m.status==='new'?'var(--clr-danger)':m.status==='replied'?'var(--clr-success)':'var(--clr-text-muted)'">
+                    {{m.status}}
+                  </span>
+                  <span style="font-size:.7rem;color:var(--clr-text-light);">{{m.createdAt | date:'MMM d'}}</span>
+                </div>
+              </div>
+              <div style="font-size:.8rem;color:var(--clr-text-muted);margin-top:.4rem;font-weight:600;">{{m.subject}}</div>
+              <div style="font-size:.78rem;color:var(--clr-text-light);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:.2rem;">{{m.message}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Message detail -->
+      <div class="col-lg-7">
+        <div *ngIf="!selected" class="text-center py-5" style="background:white;border-radius:var(--radius-lg);border:1px solid var(--clr-border);">
+          <i class="bi bi-envelope-open" style="font-size:3rem;color:var(--clr-text-light);"></i>
+          <p class="mt-3" style="color:var(--clr-text-muted);">Select a message to view it</p>
+        </div>
+        <div *ngIf="selected" class="card" style="border-radius:var(--radius-lg);">
+          <div class="card-header d-flex justify-content-between align-items-center" style="background:var(--clr-off-white);border-radius:var(--radius-lg) var(--radius-lg) 0 0;padding:1.2rem 1.5rem;">
+            <div>
+              <h6 class="mb-0" style="font-family:var(--font-heading);color:var(--clr-navy);">{{selected.subject}}</h6>
+              <div style="font-size:.78rem;color:var(--clr-text-muted);margin-top:.2rem;">{{selected.createdAt | date:'MMMM d, y · h:mm a'}}</div>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-sm btn-outline-secondary" (click)="close()"><i class="bi bi-x-lg"></i></button>
+            </div>
+          </div>
+          <div class="card-body p-4">
+            <!-- Sender info -->
+            <div class="d-flex align-items-center gap-3 mb-4 p-3" style="background:var(--clr-off-white);border-radius:var(--radius-md);">
+              <div class="msg-avatar msg-avatar-lg">{{selected.name.charAt(0)}}</div>
+              <div>
+                <div style="font-weight:700;color:var(--clr-navy);">{{selected.name}}</div>
+                <div style="font-size:.82rem;color:var(--clr-text-muted);">
+                  <a [href]="'mailto:' + selected.email" style="color:var(--clr-primary);text-decoration:none;">{{selected.email}}</a>
+                  <span *ngIf="selected.phone"> · {{selected.phone}}</span>
+                </div>
+              </div>
+            </div>
+            <!-- Message body -->
+            <div style="line-height:1.75;color:var(--clr-text);font-size:.9rem;white-space:pre-wrap;">{{selected.message}}</div>
+            <!-- Actions -->
+            <div class="d-flex gap-2 mt-4 pt-4" style="border-top:1px solid var(--clr-border);">
+              <a [href]="'mailto:' + selected.email + '?subject=Re: ' + selected.subject" class="btn btn-primary btn-sm">
+                <i class="bi bi-reply me-1"></i>Reply via Email
+              </a>
+              <button class="btn btn-sm btn-outline-success" (click)="updateStatus(selected, 'replied')" [disabled]="selected.status==='replied'">
+                <i class="bi bi-check me-1"></i>Mark Replied
+              </button>
+              <button class="btn btn-sm btn-outline-danger ms-auto" (click)="deleteMsg(selected)">
+                <i class="bi bi-trash me-1"></i>Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

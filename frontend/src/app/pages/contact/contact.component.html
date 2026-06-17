@@ -1,0 +1,96 @@
+<div class="page-header">
+  <div class="container">
+    <nav aria-label="breadcrumb" class="mb-3"><ol class="breadcrumb" style="background:transparent;padding:0;margin:0;"><li class="breadcrumb-item"><a routerLink="/" style="color:rgba(255,255,255,.7);text-decoration:none;">Home</a></li><li class="breadcrumb-item active" style="color:rgba(255,255,255,.9);">Contact</li></ol></nav>
+    <h1 class="page-header-title mb-2">Get In Touch</h1>
+    <p class="page-header-subtitle">Our travel experts are ready to help you plan your perfect Tunisia adventure.</p>
+  </div>
+</div>
+<section class="section-pad">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-7">
+        <div class="card p-4 p-md-5" style="border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);">
+          <h3 style="font-family:var(--font-heading);color:var(--clr-navy);" class="mb-4">Send Us a Message</h3>
+          <div *ngIf="successMsg" class="alert d-flex align-items-center gap-2 mb-4" style="background:rgba(5,150,105,.08);border:1px solid rgba(5,150,105,.25);border-radius:var(--radius-md);color:var(--clr-success);padding:1rem;">
+            <i class="bi bi-check-circle-fill fs-5"></i> <span>{{successMsg}}</span>
+          </div>
+          <div *ngIf="errorMsg" class="alert d-flex align-items-center gap-2 mb-4" style="background:rgba(220,38,38,.06);border:1px solid rgba(220,38,38,.2);border-radius:var(--radius-md);color:var(--clr-danger);padding:1rem;">
+            <i class="bi bi-exclamation-circle-fill fs-5"></i> <span>{{errorMsg}}</span>
+          </div>
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label">Full Name *</label>
+              <input type="text" class="form-control" [(ngModel)]="form.name" placeholder="Your name">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Email Address *</label>
+              <input type="email" class="form-control" [(ngModel)]="form.email" placeholder="email@example.com">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Phone (optional)</label>
+              <input type="tel" class="form-control" [(ngModel)]="form.phone" placeholder="+216 XX XXX XXX">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Subject *</label>
+              <select class="form-select" [(ngModel)]="form.subject">
+                <option value="">Select subject...</option>
+                <option>Tour Inquiry</option><option>Custom Itinerary</option><option>Booking Support</option><option>General Information</option><option>Partnership</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Message *</label>
+              <textarea class="form-control" rows="5" [(ngModel)]="form.message" placeholder="Tell us about your dream Tunisia trip..."></textarea>
+            </div>
+            <div class="col-12">
+              <button class="btn btn-primary btn-lg w-100" (click)="submit()" [disabled]="submitting">
+                <span *ngIf="!submitting"><i class="bi bi-send me-2"></i>Send Message</span>
+                <span *ngIf="submitting"><span class="spinner-border spinner-border-sm me-2"></span>Sending...</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="mb-4 p-4" style="background:var(--clr-navy);border-radius:var(--radius-xl);color:white;">
+          <h4 style="font-family:var(--font-heading);color:white;margin-bottom:1.5rem;">Contact Information</h4>
+          <div class="d-flex flex-column gap-4">
+            <div class="d-flex gap-3">
+              <div style="width:44px;height:44px;background:rgba(255,255,255,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="bi bi-geo-alt" style="color:var(--clr-secondary);"></i></div>
+              <div><div style="font-weight:600;font-size:.9rem;">Office Address</div><div style="font-size:.85rem;color:rgba(255,255,255,.7);line-height:1.5;">15 Avenue Habib Bourguiba<br>Tunis 1000, Tunisia</div></div>
+            </div>
+            <div class="d-flex gap-3">
+              <div style="width:44px;height:44px;background:rgba(255,255,255,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="bi bi-telephone" style="color:var(--clr-secondary);"></i></div>
+              <div><div style="font-weight:600;font-size:.9rem;">Phone</div><div style="font-size:.85rem;color:rgba(255,255,255,.7);">+216 00 000 000</div></div>
+            </div>
+            <div class="d-flex gap-3">
+              <div style="width:44px;height:44px;background:rgba(255,255,255,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="bi bi-envelope" style="color:var(--clr-secondary);"></i></div>
+              <div><div style="font-weight:600;font-size:.9rem;">Email</div><div style="font-size:.85rem;color:rgba(255,255,255,.7);">hello&#64;tunisiavista.com</div></div>
+            </div>
+            <div class="d-flex gap-3">
+              <div style="width:44px;height:44px;background:rgba(255,255,255,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><i class="bi bi-clock" style="color:var(--clr-secondary);"></i></div>
+              <div><div style="font-weight:600;font-size:.9rem;">Working Hours</div><div style="font-size:.85rem;color:rgba(255,255,255,.7);">Mon–Fri: 9:00–18:00<br>Sat: 9:00–13:00</div></div>
+            </div>
+          </div>
+        </div>
+        <!-- Map -->
+        <div style="height:180px;background:var(--clr-sand);border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;border:2px dashed var(--clr-border);margin-bottom:1.5rem;">
+          <div class="text-center" style="color:var(--clr-text-muted);"><i class="bi bi-map" style="font-size:2rem;"></i><p class="mb-0 mt-2 small">Google Maps, Tunis Office</p></div>
+        </div>
+        <!-- FAQ -->
+        <div>
+          <h4 style="font-family:var(--font-heading);color:var(--clr-navy);" class="mb-3">Frequently Asked Questions</h4>
+          <div class="d-flex flex-column gap-2">
+            <div *ngFor="let faq of faqs; let i = index" style="border:1px solid var(--clr-border);border-radius:var(--radius-md);overflow:hidden;">
+              <button class="w-100 text-start d-flex align-items-center justify-content-between p-3 border-0 bg-transparent" (click)="toggleAccordion(i)" style="font-weight:600;font-size:.875rem;color:var(--clr-navy);cursor:pointer;">
+                {{faq.q}}
+                <i [class]="'bi bi-chevron-' + (activeAccordion===i ? 'up' : 'down')" style="color:var(--clr-primary);flex-shrink:0;margin-left:.5rem;"></i>
+              </button>
+              <div *ngIf="activeAccordion===i" style="padding:.75rem 1rem 1rem;background:var(--clr-off-white);font-size:.875rem;color:var(--clr-text-muted);line-height:1.65;border-top:1px solid var(--clr-border);">{{faq.a}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

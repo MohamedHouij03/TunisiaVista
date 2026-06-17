@@ -1,0 +1,153 @@
+<div *ngIf="notFound" class="container text-center py-5"><h2>Tour Not Found</h2><a routerLink="/tours" class="btn btn-primary mt-3">Browse Tours</a></div>
+
+<div *ngIf="tour">
+  <!-- Hero -->
+  <div style="height:65vh;position:relative;overflow:hidden;">
+    <img [src]="tour.coverImage" [alt]="tour.name" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.style.background='linear-gradient(135deg,#1B4F8A,#2d6db5)'">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,22,40,.25) 0%,rgba(10,22,40,.8) 100%);"></div>
+    <div class="container" style="position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);">
+      <div class="d-flex gap-2 mb-2 flex-wrap">
+        <span class="badge-region">{{tour.category}}</span>
+        <span *ngIf="tour.featured" class="badge-gold"><i class="bi bi-lightning-fill me-1"></i>Featured</span>
+      </div>
+      <h1 style="font-family:var(--font-heading);font-size:clamp(1.8rem,4vw,3rem);font-weight:700;color:white;margin-bottom:.5rem;">{{tour.name}}</h1>
+      <div class="d-flex gap-4 flex-wrap">
+        <span style="color:rgba(255,255,255,.85);font-size:.9rem;"><i class="bi bi-clock me-1"></i>{{tour.duration}} days</span>
+        <span style="color:rgba(255,255,255,.85);font-size:.9rem;"><i class="bi bi-people me-1"></i>Max {{tour.maxGroupSize}}</span>
+        <span style="color:rgba(255,255,255,.85);font-size:.9rem;"><i class="bi bi-bar-chart me-1"></i>{{tour.difficulty}}</span>
+        <span style="color:rgba(255,255,255,.85);font-size:.9rem;"><i class="bi bi-star-fill me-1" style="color:var(--clr-accent);"></i>{{tour.rating}} ({{tour.reviewsCount}} reviews)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="breadcrumb-section">
+    <div class="container">
+      <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item"><a routerLink="/tours">Tours</a></li>
+        <li class="breadcrumb-item active">{{tour.name}}</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="container py-5">
+    <div class="row g-5">
+      <!-- Main Content -->
+      <div class="col-lg-8">
+        <!-- Tabs -->
+        <div style="border-bottom:2px solid var(--clr-border);margin-bottom:2rem;">
+          <div class="d-flex gap-1">
+            <button *ngFor="let tab of ['overview','itinerary','includes']" class="btn border-0 pb-3 fw-600" [style.borderBottom]="activeTab===tab ? '2px solid var(--clr-primary)' : '2px solid transparent'" [style.color]="activeTab===tab ? 'var(--clr-primary)' : 'var(--clr-text-muted)'" (click)="activeTab=tab" style="border-radius:0;font-size:.875rem;margin-bottom:-2px;">
+              {{tab | titlecase}}
+            </button>
+          </div>
+        </div>
+
+        <!-- Overview -->
+        <div *ngIf="activeTab==='overview'">
+          <h3 style="font-family:var(--font-heading);color:var(--clr-navy);">Tour Overview</h3>
+          <p style="color:var(--clr-text-muted);line-height:1.85;font-size:1rem;margin-top:1rem;">{{tour.description}}</p>
+        </div>
+
+        <!-- Itinerary -->
+        <div *ngIf="activeTab==='itinerary'">
+          <h3 style="font-family:var(--font-heading);color:var(--clr-navy);" class="mb-4">Day-by-Day Itinerary</h3>
+          <div class="d-flex flex-column gap-3">
+            <div *ngFor="let day of tour.itinerary" style="border:1px solid var(--clr-border);border-radius:var(--radius-lg);overflow:hidden;">
+              <div style="background:var(--clr-primary);padding:.75rem 1.25rem;display:flex;align-items:center;gap:.75rem;">
+                <div style="width:32px;height:32px;background:rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:700;font-size:.85rem;flex-shrink:0;">{{day.day}}</div>
+                <span style="color:white;font-weight:700;font-size:.95rem;">Day {{day.day}}: {{day.title}}</span>
+              </div>
+              <div style="padding:1.25rem;">
+                <p style="color:var(--clr-text-muted);line-height:1.7;margin:0;font-size:.9rem;">{{day.description}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Includes -->
+        <div *ngIf="activeTab==='includes'">
+          <div class="row g-4">
+            <div class="col-md-6">
+              <h4 style="font-family:var(--font-heading);color:var(--clr-navy);" class="mb-3">What's Included</h4>
+              <div class="d-flex flex-column gap-2">
+                <div *ngFor="let inc of tour.includes" class="d-flex gap-2 align-items-start">
+                  <i class="bi bi-check-circle-fill" style="color:var(--clr-success);margin-top:.15rem;flex-shrink:0;"></i>
+                  <span style="font-size:.875rem;">{{inc}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <h4 style="font-family:var(--font-heading);color:var(--clr-navy);" class="mb-3">Not Included</h4>
+              <div class="d-flex flex-column gap-2">
+                <div *ngFor="let exc of tour.excludes" class="d-flex gap-2 align-items-start">
+                  <i class="bi bi-x-circle-fill" style="color:var(--clr-danger);margin-top:.15rem;flex-shrink:0;"></i>
+                  <span style="font-size:.875rem;">{{exc}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Booking Sidebar -->
+      <div class="col-lg-4">
+        <div class="card p-4" style="border-radius:var(--radius-lg);position:sticky;top:90px;box-shadow:var(--shadow-lg);">
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <div>
+              <div style="font-size:1.6rem;font-weight:700;font-family:var(--font-heading);color:var(--clr-primary);">{{tour.price | number}} TND</div>
+              <div style="font-size:.78rem;color:var(--clr-text-muted);">per person</div>
+            </div>
+            <div style="color:var(--clr-accent);font-size:.85rem;">★ {{tour.rating}}</div>
+          </div>
+
+          <ng-container *ngIf="!bookingMsg">
+            <div class="mb-3">
+              <label class="form-label">Travelers</label>
+              <input type="number" class="form-control" [(ngModel)]="booking.travelers" min="1" max="20">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Start Date</label>
+              <input type="date" class="form-control" [(ngModel)]="booking.startDate">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Your Name</label>
+              <input type="text" class="form-control" [(ngModel)]="booking.contactName" placeholder="Full name">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" [(ngModel)]="booking.contactEmail" placeholder="email@example.com">
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Notes (optional)</label>
+              <textarea class="form-control" rows="2" [(ngModel)]="booking.notes" placeholder="Any special requirements..."></textarea>
+            </div>
+
+            <div style="background:var(--clr-off-white);border-radius:var(--radius-md);padding:1rem;margin-bottom:1rem;">
+              <div class="d-flex justify-content-between">
+                <span style="font-size:.875rem;color:var(--clr-text-muted);">{{tour.price}} TND × {{booking.travelers}} person(s)</span>
+                <span style="font-weight:700;color:var(--clr-navy);">{{totalPrice | number}} TND</span>
+              </div>
+            </div>
+
+            <p *ngIf="bookingError" style="color:var(--clr-danger);font-size:.82rem;margin-bottom:.75rem;">{{bookingError}}</p>
+            <button class="btn btn-primary w-100 btn-lg" (click)="submitBooking()" [disabled]="bookingLoading">
+              <span *ngIf="!bookingLoading"><i class="bi bi-calendar-check me-2"></i>Request Booking</span>
+              <span *ngIf="bookingLoading"><span class="spinner-border spinner-border-sm me-2"></span>Processing...</span>
+            </button>
+            <p *ngIf="!auth.isLoggedIn()" style="font-size:.75rem;color:var(--clr-text-muted);text-align:center;margin-top:.5rem;">
+              <a routerLink="/login" style="color:var(--clr-primary);">Sign in</a> to book this tour
+            </p>
+          </ng-container>
+
+          <div *ngIf="bookingMsg" style="text-align:center;padding:1rem 0;">
+            <i class="bi bi-check-circle-fill" style="font-size:2.5rem;color:var(--clr-success);"></i>
+            <h5 style="color:var(--clr-navy);margin-top:.75rem;">Booking Submitted!</h5>
+            <p style="font-size:.875rem;color:var(--clr-text-muted);">{{bookingMsg}}</p>
+            <a routerLink="/my-bookings" class="btn btn-outline-primary w-100 mt-2">View My Bookings</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

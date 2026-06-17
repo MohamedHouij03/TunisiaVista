@@ -1,0 +1,28 @@
+<div class="page-header">
+  <div class="container">
+    <nav aria-label="breadcrumb" class="mb-3"><ol class="breadcrumb" style="background:transparent;padding:0;margin:0;"><li class="breadcrumb-item"><a routerLink="/" style="color:rgba(255,255,255,.7);text-decoration:none;">Home</a></li><li class="breadcrumb-item active" style="color:rgba(255,255,255,.9);">Gallery</li></ol></nav>
+    <h1 class="page-header-title mb-2">Photo Gallery</h1>
+    <p class="page-header-subtitle">A visual journey through Tunisia's most breathtaking landscapes and moments.</p>
+  </div>
+</div>
+<div style="background:white;border-bottom:1px solid var(--clr-border);padding:.75rem 0;position:sticky;top:72px;z-index:40;box-shadow:var(--shadow-sm);">
+  <div class="container"><div class="filter-tabs"><button *ngFor="let c of categories" class="filter-btn" [class.active]="activeCategory===c" (click)="filter(c)">{{c}}</button></div></div>
+</div>
+<section class="section-pad">
+  <div class="container">
+    <div style="columns:3;gap:.75rem;column-fill:balance;" class="masonry-gallery">
+      <div *ngFor="let img of filtered" class="gallery-item mb-3" style="break-inside:avoid;border-radius:var(--radius-md);overflow:hidden;cursor:pointer;">
+        <img [src]="img.src" [alt]="img.title" style="width:100%;display:block;border-radius:var(--radius-md);transition:transform .4s ease;" loading="lazy" onerror="this.style.opacity='.5'">
+        <div class="gallery-overlay" style="border-radius:var(--radius-md);">
+          <div style="text-align:center;">
+            <i class="bi bi-zoom-in" style="font-size:1.5rem;"></i>
+            <div style="font-size:.8rem;margin-top:.4rem;">{{img.title}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="filtered.length===0" class="text-center py-5">
+      <p style="color:var(--clr-text-muted);">No photos in this category yet.</p>
+    </div>
+  </div>
+</section>

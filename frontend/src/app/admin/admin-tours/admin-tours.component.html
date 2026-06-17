@@ -1,0 +1,135 @@
+<div class="admin-content">
+  <div class="admin-topbar">
+    <div class="d-flex align-items-center gap-3">
+      <a routerLink="/admin/dashboard" class="btn btn-sm btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Dashboard</a>
+      <h5 class="mb-0" style="font-family:var(--font-heading);color:var(--clr-navy);">Tour Packages</h5>
+    </div>
+    <button class="btn btn-primary btn-sm" (click)="openNew()"><i class="bi bi-plus-lg me-1"></i>Add Tour</button>
+  </div>
+
+  <div class="p-4">
+    <div *ngIf="successMsg" class="alert alert-success mb-4" style="border-radius:var(--radius-md);">
+      <i class="bi bi-check-circle me-2"></i>{{successMsg}}
+    </div>
+
+    <div *ngIf="deleteConfirm" class="modal-backdrop-custom">
+      <div class="modal-dialog-custom">
+        <i class="bi bi-exclamation-triangle text-danger" style="font-size:2.5rem;"></i>
+        <h5 class="mt-3" style="font-family:var(--font-heading);">Delete this tour?</h5>
+        <p style="color:var(--clr-text-muted);font-size:.9rem;">This cannot be undone.</p>
+        <div class="d-flex gap-2 justify-content-center mt-3">
+          <button class="btn btn-outline-secondary" (click)="cancelDelete()">Cancel</button>
+          <button class="btn btn-danger" (click)="doDelete()">Delete Tour</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form Panel -->
+    <div *ngIf="showForm" class="card mb-4" style="border-radius:var(--radius-lg);border-left:4px solid var(--clr-primary);">
+      <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h6 class="mb-0" style="font-family:var(--font-heading);font-size:1.1rem;">{{editing ? 'Edit' : 'New'}} Tour</h6>
+          <button class="btn btn-sm btn-outline-secondary" (click)="closeForm()"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label class="form-label">Tour Name *</label>
+            <input type="text" class="form-control" [(ngModel)]="form.name" placeholder="e.g. Sahara Adventure">
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Category</label>
+            <select class="form-select" [(ngModel)]="form.category">
+              <option *ngFor="let c of categories" [value]="c">{{c}}</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Difficulty</label>
+            <select class="form-select" [(ngModel)]="form.difficulty">
+              <option *ngFor="let d of difficulties" [value]="d">{{d}}</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Price (TND)</label>
+            <input type="number" class="form-control" [(ngModel)]="form.price" placeholder="890">
+          </div>
+          <div class="col-md-3">
+            <label class="form-label">Duration (days)</label>
+            <input type="number" class="form-control" [(ngModel)]="form.duration" placeholder="5">
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Cover Image URL</label>
+            <input type="url" class="form-control" [(ngModel)]="form.coverImage" placeholder="https://images.unsplash.com/...">
+          </div>
+          <div class="col-12">
+            <label class="form-label">Short Description</label>
+            <input type="text" class="form-control" [(ngModel)]="form.shortDesc" placeholder="One-line teaser">
+          </div>
+          <div class="col-12">
+            <label class="form-label">Full Description</label>
+            <textarea class="form-control" rows="3" [(ngModel)]="form.description"></textarea>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Includes <span style="font-weight:400;color:var(--clr-text-muted);">(one per line)</span></label>
+            <textarea class="form-control" rows="4" [(ngModel)]="form.includes" placeholder="3 Nights Hotel&#10;Breakfast Daily&#10;Airport Transfer"></textarea>
+          </div>
+          <div class="col-md-6">
+            <label class="form-label">Excludes <span style="font-weight:400;color:var(--clr-text-muted);">(one per line)</span></label>
+            <textarea class="form-control" rows="4" [(ngModel)]="form.excludes" placeholder="Flights&#10;Travel Insurance&#10;Lunch"></textarea>
+          </div>
+          <div class="col-12 d-flex gap-2">
+            <button class="btn btn-primary" (click)="save()" [disabled]="saving || !form.name">
+              <span *ngIf="!saving"><i class="bi bi-save me-1"></i>{{editing ? 'Update' : 'Create'}} Tour</span>
+              <span *ngIf="saving"><span class="spinner-border spinner-border-sm me-2"></span>Saving...</span>
+            </button>
+            <button class="btn btn-outline-secondary" (click)="closeForm()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="data-table">
+      <div class="d-flex justify-content-between align-items-center p-3" style="border-bottom:1px solid var(--clr-border);">
+        <h6 class="mb-0" style="font-weight:700;">All Tours <span class="badge bg-primary ms-2">{{tours.length}}</span></h6>
+      </div>
+      <div *ngIf="loading" class="text-center py-5"><div class="spinner-border text-primary"></div></div>
+      <div class="table-responsive" *ngIf="!loading">
+        <table class="table mb-0">
+          <thead>
+            <tr>
+              <th>TOUR NAME</th>
+              <th>CATEGORY</th>
+              <th>DURATION</th>
+              <th>PRICE</th>
+              <th>DIFFICULTY</th>
+              <th class="text-end">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let t of tours">
+              <td>
+                <div class="d-flex align-items-center gap-3">
+                  <img *ngIf="t.coverImage" [src]="t.coverImage" style="width:48px;height:36px;object-fit:cover;border-radius:6px;" loading="lazy" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-weight:600;color:var(--clr-navy);">{{t.name}}</div>
+                    <div style="font-size:.75rem;color:var(--clr-text-muted);">★ {{t.rating}} · {{t.reviewsCount}} reviews</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge-region">{{t.category}}</span></td>
+              <td style="font-size:.875rem;">{{t.duration}} days</td>
+              <td style="font-weight:700;color:var(--clr-primary);">{{t.price | number}} TND</td>
+              <td>
+                <span style="font-size:.78rem;padding:.2rem .6rem;border-radius:4px;" [style.background]="t.difficulty==='Easy'?'rgba(5,150,105,.1)':t.difficulty==='Moderate'?'rgba(245,158,11,.1)':'rgba(220,38,38,.1)'" [style.color]="t.difficulty==='Easy'?'var(--clr-success)':t.difficulty==='Moderate'?'#d97706':'var(--clr-danger)'">{{t.difficulty}}</span>
+              </td>
+              <td class="text-end">
+                <button class="btn btn-sm btn-outline-primary me-1" (click)="openEdit(t)"><i class="bi bi-pencil"></i></button>
+                <button class="btn btn-sm btn-outline-danger" (click)="confirmDelete(t._id || t.id)"><i class="bi bi-trash"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

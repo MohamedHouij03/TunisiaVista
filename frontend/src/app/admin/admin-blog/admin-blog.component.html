@@ -1,0 +1,138 @@
+<div class="admin-content">
+  <div class="admin-topbar">
+    <div class="d-flex align-items-center gap-3">
+      <a routerLink="/admin/dashboard" class="btn btn-sm btn-outline-secondary"><i class="bi bi-arrow-left me-1"></i>Dashboard</a>
+      <h5 class="mb-0" style="font-family:var(--font-heading);color:var(--clr-navy);">Blog Posts</h5>
+    </div>
+    <button class="btn btn-primary btn-sm" (click)="openNew()"><i class="bi bi-plus-lg me-1"></i>New Post</button>
+  </div>
+
+  <div class="p-4">
+    <div *ngIf="successMsg" class="alert alert-success mb-4" style="border-radius:var(--radius-md);">
+      <i class="bi bi-check-circle me-2"></i>{{successMsg}}
+    </div>
+
+    <div *ngIf="deleteConfirm" class="modal-backdrop-custom">
+      <div class="modal-dialog-custom">
+        <i class="bi bi-exclamation-triangle text-danger" style="font-size:2.5rem;"></i>
+        <h5 class="mt-3" style="font-family:var(--font-heading);">Delete post?</h5>
+        <p style="color:var(--clr-text-muted);font-size:.9rem;">This cannot be undone.</p>
+        <div class="d-flex gap-2 justify-content-center mt-3">
+          <button class="btn btn-outline-secondary" (click)="cancelDelete()">Cancel</button>
+          <button class="btn btn-danger" (click)="doDelete()">Delete</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div *ngIf="showForm" class="card mb-4" style="border-radius:var(--radius-lg);border-left:4px solid var(--clr-primary);">
+      <div class="card-body p-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+          <h6 class="mb-0" style="font-family:var(--font-heading);font-size:1.1rem;">{{editing ? 'Edit' : 'New'}} Post</h6>
+          <button class="btn btn-sm btn-outline-secondary" (click)="closeForm()"><i class="bi bi-x-lg"></i></button>
+        </div>
+        <div class="row g-3">
+          <div class="col-md-8">
+            <label class="form-label">Title *</label>
+            <input type="text" class="form-control" [(ngModel)]="form.title" placeholder="Blog post title">
+          </div>
+          <div class="col-md-4">
+            <label class="form-label">Category</label>
+            <select class="form-select" [(ngModel)]="form.category">
+              <option *ngFor="let c of categories" [value]="c">{{c}}</option>
+            </select>
+          </div>
+          <div class="col-md-8">
+            <label class="form-label">Cover Image URL</label>
+            <input type="url" class="form-control" [(ngModel)]="form.coverImage" placeholder="https://images.unsplash.com/...">
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Read Time (min)</label>
+            <input type="number" class="form-control" [(ngModel)]="form.readTime" min="1">
+          </div>
+          <div class="col-md-2">
+            <label class="form-label">Author</label>
+            <input type="text" class="form-control" [(ngModel)]="form.authorName" placeholder="Full name">
+          </div>
+          <div class="col-12">
+            <label class="form-label">Excerpt</label>
+            <textarea class="form-control" rows="2" [(ngModel)]="form.excerpt" placeholder="Short teaser (displayed in listings)"></textarea>
+          </div>
+          <div class="col-12">
+            <label class="form-label">Content</label>
+            <textarea class="form-control" rows="6" [(ngModel)]="form.content" placeholder="Full article content..."></textarea>
+          </div>
+          <div class="col-12 d-flex gap-4 align-items-center">
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="form.isPublished" id="published">
+              <label class="form-check-label" for="published">Published</label>
+            </div>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" [(ngModel)]="form.featured" id="featured">
+              <label class="form-check-label" for="featured">Featured</label>
+            </div>
+          </div>
+          <div class="col-12 d-flex gap-2">
+            <button class="btn btn-primary" (click)="save()" [disabled]="saving || !form.title">
+              <span *ngIf="!saving"><i class="bi bi-save me-1"></i>{{editing ? 'Update' : 'Create'}} Post</span>
+              <span *ngIf="saving"><span class="spinner-border spinner-border-sm me-2"></span>Saving...</span>
+            </button>
+            <button class="btn btn-outline-secondary" (click)="closeForm()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Filter + Table -->
+    <div class="data-table">
+      <div class="d-flex justify-content-between align-items-center p-3" style="border-bottom:1px solid var(--clr-border);">
+        <h6 class="mb-0" style="font-weight:700;">All Posts <span class="badge bg-primary ms-2">{{posts.length}}</span></h6>
+        <div class="d-flex gap-2">
+          <button class="btn btn-sm" [class.btn-primary]="filterStatus==='all'" [class.btn-outline-secondary]="filterStatus!=='all'" (click)="filterStatus='all'">All</button>
+          <button class="btn btn-sm" [class.btn-success]="filterStatus==='published'" [class.btn-outline-secondary]="filterStatus!=='published'" (click)="filterStatus='published'">Published</button>
+          <button class="btn btn-sm" [class.btn-warning]="filterStatus==='draft'" [class.btn-outline-secondary]="filterStatus!=='draft'" (click)="filterStatus='draft'">Drafts</button>
+        </div>
+      </div>
+      <div *ngIf="loading" class="text-center py-5"><div class="spinner-border text-primary"></div></div>
+      <div class="table-responsive" *ngIf="!loading">
+        <table class="table mb-0">
+          <thead>
+            <tr>
+              <th>POST</th>
+              <th>CATEGORY</th>
+              <th>AUTHOR</th>
+              <th>READ TIME</th>
+              <th>STATUS</th>
+              <th class="text-end">ACTIONS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of filtered">
+              <td>
+                <div class="d-flex align-items-center gap-3">
+                  <img *ngIf="p.coverImage" [src]="p.coverImage" style="width:48px;height:36px;object-fit:cover;border-radius:6px;" loading="lazy" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-weight:600;color:var(--clr-navy);max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{p.title}}</div>
+                    <div style="font-size:.75rem;color:var(--clr-text-muted);">{{p.featured ? '⭐ Featured' : ''}}</div>
+                  </div>
+                </div>
+              </td>
+              <td><span class="badge-region">{{p.category}}</span></td>
+              <td style="font-size:.82rem;">{{p.authorName || 'N/A'}}</td>
+              <td style="font-size:.82rem;color:var(--clr-text-muted);">{{p.readTime}} min</td>
+              <td>
+                <span style="font-size:.72rem;font-weight:700;padding:.2rem .65rem;border-radius:50px;" [style.background]="p.isPublished ? 'rgba(5,150,105,.1)' : 'rgba(245,158,11,.1)'" [style.color]="p.isPublished ? 'var(--clr-success)' : '#d97706'">
+                  {{p.isPublished ? 'Published' : 'Draft'}}
+                </span>
+              </td>
+              <td class="text-end">
+                <button class="btn btn-sm btn-outline-primary me-1" (click)="openEdit(p)"><i class="bi bi-pencil"></i></button>
+                <button class="btn btn-sm btn-outline-danger" (click)="confirmDelete(p._id || p.id)"><i class="bi bi-trash"></i></button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

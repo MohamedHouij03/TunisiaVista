@@ -1,0 +1,186 @@
+<nav class="navbar navbar-expand-lg navbar-main fixed-top" [class.scrolled]="scrolled">
+  <div class="container">
+
+    <!-- Brand -->
+    <a class="navbar-brand" routerLink="/">
+      Tunisia<span>Vista</span>
+    </a>
+
+    <!-- Mobile Toggle -->
+    <button class="navbar-toggler border-0 shadow-none" type="button"
+            data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
+      <span class="bi bi-list fs-4"></span>
+    </button>
+
+    <!-- Desktop Nav -->
+    <div class="collapse navbar-collapse" id="navbarMain">
+      <ul class="navbar-nav mx-auto gap-1">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">Home</a>
+        </li>
+
+        <!-- Destinations Mega Menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="destDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Destinations
+          </a>
+          <div class="dropdown-menu mega-menu p-0 border-0 shadow-lg" style="min-width:600px; border-radius:16px; overflow:hidden; margin-top:8px;">
+            <div class="row g-0">
+              <div class="col-4" style="background:var(--clr-sand); padding:1.5rem;">
+                <p class="section-label mb-2" style="font-size:0.65rem;">By Region</p>
+                <a routerLink="/destinations" [queryParams]="{region:'North'}" class="d-block text-decoration-none py-1 mega-link">
+                  <i class="bi bi-geo-alt me-2 text-primary-custom"></i>North Tunisia
+                </a>
+                <a routerLink="/destinations" [queryParams]="{region:'Sahel'}" class="d-block text-decoration-none py-1 mega-link">
+                  <i class="bi bi-geo-alt me-2 text-primary-custom"></i>Sahel Region
+                </a>
+                <a routerLink="/destinations" [queryParams]="{region:'Cap Bon'}" class="d-block text-decoration-none py-1 mega-link">
+                  <i class="bi bi-geo-alt me-2 text-primary-custom"></i>Cap Bon
+                </a>
+                <a routerLink="/destinations" [queryParams]="{region:'South'}" class="d-block text-decoration-none py-1 mega-link">
+                  <i class="bi bi-geo-alt me-2 text-primary-custom"></i>South Tunisia
+                </a>
+                <a routerLink="/destinations" [queryParams]="{region:'Island'}" class="d-block text-decoration-none py-1 mega-link">
+                  <i class="bi bi-geo-alt me-2 text-primary-custom"></i>Djerba Island
+                </a>
+              </div>
+              <div class="col-8 p-4">
+                <p class="section-label mb-3" style="font-size:0.65rem;">Popular Destinations</p>
+                <div class="row g-2">
+                  <div class="col-6" *ngFor="let dest of quickDests">
+                    <a [routerLink]="['/destinations', dest.id]" class="d-flex align-items-center gap-2 text-decoration-none py-1 mega-link-dest">
+                      <span class="mega-dest-dot"></span>
+                      <span>{{dest.name}}</span>
+                    </a>
+                  </div>
+                </div>
+                <div class="mt-3 pt-3" style="border-top:1px solid var(--clr-border);">
+                  <a routerLink="/destinations" class="btn btn-sm btn-primary">
+                    View All Destinations <i class="bi bi-arrow-right ms-1"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/experiences" routerLinkActive="active">Experiences</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/tours" routerLinkActive="active">Tours</a>
+        </li>
+
+        <!-- About Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown">About</a>
+          <ul class="dropdown-menu border-0 shadow-lg py-2" style="border-radius:12px; min-width:200px; margin-top:8px;">
+            <li><a routerLink="/about-tunisia" class="dropdown-item py-2 px-3">
+              <i class="bi bi-map me-2 text-primary-custom"></i>About Tunisia
+            </a></li>
+            <li><a routerLink="/about" class="dropdown-item py-2 px-3">
+              <i class="bi bi-building me-2 text-primary-custom"></i>About Agency
+            </a></li>
+          </ul>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/blog" routerLinkActive="active">Blog</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/contact" routerLinkActive="active">Contact</a>
+        </li>
+      </ul>
+
+      <!-- Right Actions -->
+      <div class="d-flex align-items-center gap-2">
+        <button class="btn btn-ghost-dark icon-btn" (click)="toggleSearch()" title="Search">
+          <i class="bi bi-search"></i>
+        </button>
+
+        <ng-container *ngIf="!isLoggedIn">
+          <a routerLink="/login" class="btn btn-sm btn-outline-primary">Sign In</a>
+          <a routerLink="/register" class="btn btn-sm btn-primary">Register</a>
+        </ng-container>
+
+        <ng-container *ngIf="isLoggedIn">
+          <div class="dropdown">
+            <button class="btn btn-sm user-avatar-btn dropdown-toggle border-0" data-bs-toggle="dropdown">
+              <div class="user-avatar">{{user?.firstName?.charAt(0)}}{{user?.lastName?.charAt(0)}}</div>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-end border-0 shadow-lg py-2" style="border-radius:12px; min-width:190px;">
+              <li class="px-3 py-2 mb-1">
+                <div class="fw-600 text-navy" style="font-size:.85rem;">{{user?.firstName}} {{user?.lastName}}</div>
+                <div style="font-size:.75rem; color:var(--clr-text-muted);">{{user?.email}}</div>
+              </li>
+              <li><hr class="dropdown-divider m-0"></li>
+              <li><a routerLink="/profile" class="dropdown-item py-2 px-3"><i class="bi bi-person me-2"></i>My Profile</a></li>
+              <li><a routerLink="/my-bookings" class="dropdown-item py-2 px-3"><i class="bi bi-suitcase me-2"></i>My Bookings</a></li>
+              <ng-container *ngIf="isAdmin">
+                <li><hr class="dropdown-divider m-0"></li>
+                <li><a routerLink="/admin" class="dropdown-item py-2 px-3 text-primary-custom fw-600"><i class="bi bi-speedometer2 me-2"></i>Admin Panel</a></li>
+              </ng-container>
+              <li><hr class="dropdown-divider m-0"></li>
+              <li><button class="dropdown-item py-2 px-3 text-danger" (click)="logout()"><i class="bi bi-box-arrow-right me-2"></i>Sign Out</button></li>
+            </ul>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="search-overlay" [class.open]="searchOpen">
+    <div class="container py-3">
+      <div class="d-flex gap-2">
+        <input type="text" class="form-control" placeholder="Search destinations, tours, experiences..." [(ngModel)]="searchQuery" style="border-radius:50px;">
+        <button class="btn btn-primary" style="border-radius:50px; padding:.6rem 1.5rem;">
+          <i class="bi bi-search me-1"></i> Search
+        </button>
+        <button class="btn btn-outline-secondary" style="border-radius:50px;" (click)="toggleSearch()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Offcanvas Menu -->
+<div class="offcanvas offcanvas-end" id="mobileMenu" tabindex="-1">
+  <div class="offcanvas-header" style="border-bottom:1px solid var(--clr-border);">
+    <span class="offcanvas-title" style="font-family:var(--font-heading); font-weight:700; color:var(--clr-navy);">
+      Tunisia<span style="color:var(--clr-secondary);">Vista</span>
+    </span>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+  </div>
+  <div class="offcanvas-body p-0">
+    <div class="py-2">
+      <a routerLink="/" class="offcanvas-nav-link" data-bs-dismiss="offcanvas"><i class="bi bi-house me-3"></i>Home</a>
+      <a routerLink="/destinations" class="offcanvas-nav-link" data-bs-dismiss="offcanvas"><i class="bi bi-geo-alt me-3"></i>Destinations</a>
+      <a routerLink="/experiences" class="offcanvas-nav-link" data-bs-dismiss="offcanvas"><i class="bi bi-compass me-3"></i>Experiences</a>
+      <a routerLink="/tours" class="offcanvas-nav-link" data-bs-dismiss="offcanvas"><i class="bi bi-suitcase me-3"></i>Tours & Packages</a>
+      <a routerLink="/about-tunisia" class="offcanvas-nav-link" data-bs-dismiss="offcanvas"><i class="bi bi-map me-3"></i>About Tunisia</a>
+      <a routerLink="/about" class="offcanvas-nav-link" data-bs-dismiss="offcanvas"><i class="bi bi-building me-3"></i>About Agency</a>
+      <a routerLink="/blog" class="offcanvas-nav-link" data-bs-dismiss="offcanvas"><i class="bi bi-journal-text me-3"></i>Blog</a>
+      <a routerLink="/gallery" class="offcanvas-nav-link" data-bs-dismiss="offcanvas"><i class="bi bi-images me-3"></i>Gallery</a>
+      <a routerLink="/contact" class="offcanvas-nav-link" data-bs-dismiss="offcanvas"><i class="bi bi-envelope me-3"></i>Contact</a>
+    </div>
+    <div class="p-3 mt-2" style="border-top:1px solid var(--clr-border);">
+      <ng-container *ngIf="!isLoggedIn">
+        <a routerLink="/login" class="btn btn-outline-primary w-100 mb-2" data-bs-dismiss="offcanvas">Sign In</a>
+        <a routerLink="/register" class="btn btn-primary w-100" data-bs-dismiss="offcanvas">Register</a>
+      </ng-container>
+      <ng-container *ngIf="isLoggedIn">
+        <div class="d-flex align-items-center gap-3 mb-3">
+          <div class="user-avatar">{{user?.firstName?.charAt(0)}}{{user?.lastName?.charAt(0)}}</div>
+          <div>
+            <div class="fw-600 text-navy" style="font-size:.9rem;">{{user?.firstName}} {{user?.lastName}}</div>
+            <div style="font-size:.75rem; color:var(--clr-text-muted);">{{user?.email}}</div>
+          </div>
+        </div>
+        <a routerLink="/profile" class="btn btn-outline-primary w-100 mb-2" data-bs-dismiss="offcanvas">My Profile</a>
+        <button class="btn btn-outline-danger w-100" (click)="logout()" data-bs-dismiss="offcanvas">Sign Out</button>
+      </ng-container>
+    </div>
+  </div>
+</div>

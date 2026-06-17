@@ -1,0 +1,259 @@
+<!-- HERO -->
+<section class="hero-section">
+  <div *ngFor="let img of heroImages; let i = index"
+       class="hero-bg"
+       [class.hero-bg--active]="i === currentHeroIdx"
+       [style.backgroundImage]="'url(' + img + ')'">
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="container hero-content" style="padding-top:80px;">
+    <div class="row align-items-center" style="min-height:calc(100vh - 120px); padding:5rem 0 2rem;">
+      <div class="col-lg-7">
+        <span class="section-label d-inline-block mb-3" data-aos="fade-up"><i class="bi bi-geo-alt me-1"></i>The Heart of the Mediterranean</span>
+        <h1 class="hero-title mb-4" data-aos="fade-up" data-aos-delay="100">Discover the<br><span style="color:var(--clr-secondary);">Magic</span> of Tunisia</h1>
+        <p class="hero-subtitle mb-5" data-aos="fade-up" data-aos-delay="200">From azure Mediterranean shores to golden Saharan dunes, from ancient Carthage to the blue-washed streets of Sidi Bou Said. Tunisia holds wonders beyond imagination.</p>
+        <div class="d-flex flex-wrap gap-3 mb-5" data-aos="fade-up" data-aos-delay="300">
+          <a routerLink="/tours" class="btn btn-gold btn-xl"><i class="bi bi-compass me-2"></i>Explore Tours</a>
+          <a routerLink="/destinations" class="btn btn-ghost btn-xl"><i class="bi bi-map me-2"></i>View Destinations</a>
+        </div>
+        <div class="d-flex flex-wrap gap-4" data-aos="fade-up" data-aos-delay="400">
+          <div *ngFor="let s of stats" class="text-white">
+            <div style="font-family:var(--font-heading);font-size:1.6rem;font-weight:700;color:var(--clr-accent);">{{s.value}}</div>
+            <div style="font-size:.75rem;color:rgba(255,255,255,.7);letter-spacing:.05em;">{{s.label}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Search Bar -->
+    <div style="max-width:800px; margin-top:-1rem;" data-aos="fade-up" data-aos-delay="500">
+      <div class="hero-search-bar d-flex flex-wrap align-items-center gap-2">
+        <div class="flex-grow-1 d-flex align-items-center gap-2 px-2">
+          <i class="bi bi-search" style="color:var(--clr-primary);"></i>
+          <input class="form-control border-0 shadow-none" placeholder="Where do you want to go?" style="font-size:.9rem;">
+        </div>
+        <div style="width:1px;height:30px;background:var(--clr-border);" class="d-none d-md-block"></div>
+        <select class="form-select flex-grow-1">
+          <option>Select Experience</option>
+          <option>Beach Holiday</option><option>Desert Adventure</option><option>Cultural Tour</option>
+        </select>
+        <div style="width:1px;height:30px;background:var(--clr-border);" class="d-none d-md-block"></div>
+        <select class="form-select flex-grow-1">
+          <option>Duration</option>
+          <option>3 days</option><option>5 days</option><option>7-10 days</option>
+        </select>
+        <a routerLink="/tours" class="btn btn-primary m-1" style="border-radius:var(--radius-lg);white-space:nowrap;"><i class="bi bi-search me-1"></i>Search</a>
+      </div>
+    </div>
+  </div>
+  <!-- Slide dots -->
+  <div class="hero-dots">
+    <button *ngFor="let img of heroImages; let i = index"
+            class="hero-dot"
+            [class.hero-dot--active]="i === currentHeroIdx"
+            (click)="currentHeroIdx = i">
+    </button>
+  </div>
+</section>
+
+<!-- WHY TUNISIA -->
+<section class="section-pad section-light">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-5" data-aos="fade-right">
+        <span class="section-label">Why Tunisia</span>
+        <h2 class="section-title mt-2 mb-4">A Country That Has Everything</h2>
+        <p style="color:var(--clr-text-muted);line-height:1.8;margin-bottom:1.5rem;">Tunisia is one of the world's most diverse travel destinations, an extraordinary intersection of African, Arab, Berber, and Mediterranean cultures packed into a country smaller than France.</p>
+        <div class="d-flex flex-column gap-3">
+          <div class="d-flex gap-3 align-items-start" *ngFor="let w of whyItems">
+            <div style="width:42px;height:42px;background:rgba(27,79,138,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+              <i [class]="w.icon" style="color:var(--clr-primary);font-size:1.1rem;"></i>
+            </div>
+            <div>
+              <div style="font-weight:700;font-size:.9rem;color:var(--clr-navy);">{{w.title}}</div>
+              <div style="font-size:.82rem;color:var(--clr-text-muted);line-height:1.5;">{{w.desc}}</div>
+            </div>
+          </div>
+        </div>
+        <a routerLink="/about-tunisia" class="btn btn-primary mt-4">Discover More <i class="bi bi-arrow-right ms-2"></i></a>
+      </div>
+      <div class="col-lg-7" data-aos="fade-left" data-aos-delay="150">
+        <div class="why-grid">
+          <img src="assets/images/carthage.jpg" alt="Carthage" class="img-cover" style="border-radius:var(--radius-lg);height:300px;width:100%;object-fit:cover;grid-row:span 2;">
+          <img src="assets/images/Sidi%20Bou%20Said.jpg" alt="Sidi Bou Said" class="img-cover" style="border-radius:var(--radius-lg);height:140px;width:100%;object-fit:cover;">
+          <img src="assets/images/kairouan.jpg" alt="Kairouan" class="img-cover" style="border-radius:var(--radius-lg);height:140px;width:100%;object-fit:cover;">
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED DESTINATIONS -->
+<section class="section-pad">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">Explore Tunisia</span>
+      <h2 class="section-title mt-2 mb-3">Top Destinations</h2>
+      <div class="divider-gold"></div>
+      <p class="section-subtitle mt-3">From ancient medinas to Saharan sunsets. Discover Tunisia's most iconic places.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6" *ngFor="let dest of destinations; let i = index" data-aos="fade-up" [attr.data-aos-delay]="(i%3)*100">
+        <a [routerLink]="['/destinations', dest.id]" class="text-decoration-none">
+          <div class="destination-card card-hover">
+            <div class="dest-img-wrap">
+              <img [src]="dest.coverImage" [alt]="dest.name" class="dest-image img-cover" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#1B4F8A,#2d6db5)'">
+              <div class="dest-overlay"></div>
+              <span class="badge-region" style="position:absolute;top:1rem;left:1rem;z-index:2;">{{dest.region}}</span>
+              <span style="position:absolute;top:1rem;right:1rem;z-index:2;background:rgba(0,0,0,.45);color:white;font-size:.75rem;font-weight:700;padding:.25rem .6rem;border-radius:50px;backdrop-filter:blur(6px);">
+                ★ {{dest.rating}}
+              </span>
+            </div>
+            <div class="dest-body">
+              <h5 class="mb-1" style="color:var(--clr-navy);font-family:var(--font-heading);">{{dest.name}}</h5>
+              <p style="font-size:.85rem;color:var(--clr-text-muted);margin-bottom:.75rem;line-height:1.5;">{{dest.shortDesc}}</p>
+              <div class="d-flex flex-wrap gap-1 mb-3">
+                <span *ngFor="let tag of dest.tags?.slice(0,3)" style="font-size:.7rem;background:var(--clr-off-white);color:var(--clr-text-muted);padding:.2rem .6rem;border-radius:50px;font-weight:600;">{{tag}}</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between">
+                <span style="font-size:.78rem;color:var(--clr-text-muted);"><i class="bi bi-calendar3 me-1"></i>{{dest.bestSeason}}</span>
+                <span style="font-size:.82rem;font-weight:600;color:var(--clr-primary);">Explore →</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="text-center mt-5" data-aos="fade-up">
+      <a routerLink="/destinations" class="btn btn-outline-primary btn-lg">View All Destinations <i class="bi bi-arrow-right ms-2"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCES -->
+<section class="section-pad section-navy">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label" style="color:var(--clr-secondary);">What To Do</span>
+      <h2 class="section-title mt-2 mb-3" style="color:white;">Unforgettable Experiences</h2>
+      <div class="divider-gold"></div>
+      <p class="section-subtitle mt-3" style="color:rgba(255,255,255,.7);">Tunisia offers adventures for every soul, from the silent Sahara to the depths of the Mediterranean.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6" *ngFor="let exp of experiences; let i = index" data-aos="fade-up" [attr.data-aos-delay]="(i%3)*100">
+        <a routerLink="/experiences" class="text-decoration-none">
+          <div class="experience-card" [style.backgroundImage]="'url(' + exp.coverImage + ')'">
+            <div class="exp-content">
+              <div class="exp-icon"><i [class]="exp.icon + ' fs-5'"></i></div>
+              <h5 style="color:white;font-family:var(--font-heading);margin-bottom:.4rem;font-size:1.1rem;">{{exp.title}}</h5>
+              <p style="font-size:.82rem;color:rgba(255,255,255,.8);line-height:1.5;margin:0;">{{exp.description}}</p>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="text-center mt-5" data-aos="fade-up">
+      <a routerLink="/experiences" class="btn btn-gold btn-lg">All Experiences <i class="bi bi-arrow-right ms-2"></i></a>
+    </div>
+  </div>
+</section>
+
+<!-- POPULAR TOURS -->
+<section class="section-pad section-light">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">Our Best Sellers</span>
+      <h2 class="section-title mt-2 mb-3">Popular Tour Packages</h2>
+      <div class="divider-gold"></div>
+      <p class="section-subtitle mt-3">Expertly crafted itineraries that reveal the best of Tunisia.</p>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-6 col-xl-3" *ngFor="let tour of featuredTours; let i = index" data-aos="fade-up" [attr.data-aos-delay]="i*80">
+        <a [routerLink]="['/tours', tour.slug]" class="text-decoration-none h-100 d-block">
+          <div class="tour-card h-100">
+            <div class="tour-img-wrap">
+              <img [src]="tour.coverImage" [alt]="tour.name" class="tour-img img-cover" loading="lazy" onerror="this.parentElement.style.background='linear-gradient(135deg,#1B4F8A,#2d6db5)'">
+              <div class="tour-price-badge">From {{tour.price | number}} TND</div>
+              <span *ngIf="tour.featured" style="position:absolute;top:.75rem;left:.75rem;background:var(--clr-accent);color:var(--clr-navy);font-size:.65rem;font-weight:700;padding:.25rem .6rem;border-radius:50px;"><i class="bi bi-lightning-fill me-1"></i>Featured</span>
+            </div>
+            <div class="tour-body">
+              <span style="font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--clr-secondary);">{{tour.category}}</span>
+              <h5 class="mt-1 mb-2" style="font-family:var(--font-heading);color:var(--clr-navy);font-size:1.05rem;">{{tour.name}}</h5>
+              <p style="font-size:.82rem;color:var(--clr-text-muted);line-height:1.5;flex:1;">{{tour.shortDesc}}</p>
+              <div class="tour-meta mt-3">
+                <span class="tour-meta-item"><i class="bi bi-clock"></i> {{tour.duration}} days</span>
+                <span class="tour-meta-item"><i class="bi bi-people"></i> Max {{tour.maxGroupSize}}</span>
+              </div>
+              <div class="d-flex align-items-center justify-content-between mt-3 pt-3" style="border-top:1px solid var(--clr-border);">
+                <div><span style="color:var(--clr-accent);">★★★★★</span> <small style="color:var(--clr-text-muted);">({{tour.reviewsCount}})</small></div>
+                <span style="font-size:.82rem;font-weight:600;color:var(--clr-primary);">View Tour →</span>
+              </div>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="text-center mt-5" data-aos="fade-up">
+      <a routerLink="/tours" class="btn btn-primary btn-lg"><i class="bi bi-suitcase me-2"></i>Browse All Packages</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BANNER -->
+<section style="background:var(--clr-primary);padding:3rem 0;" data-aos="fade-up">
+  <div class="container">
+    <div class="row text-center g-4 justify-content-center">
+      <div class="col-6 col-md-3" *ngFor="let s of stats">
+        <div style="font-family:var(--font-heading);font-size:2.2rem;font-weight:700;color:var(--clr-accent);">{{s.value}}</div>
+        <div style="font-size:.8rem;color:rgba(255,255,255,.75);letter-spacing:.08em;font-weight:500;">{{s.label}}</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section-pad">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">What Travelers Say</span>
+      <h2 class="section-title mt-2 mb-3">Real Stories, Real Memories</h2>
+      <div class="divider-gold"></div>
+    </div>
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6" *ngFor="let t of testimonials; let i = index" data-aos="fade-up" [attr.data-aos-delay]="(i%3)*100">
+        <div class="testimonial-card">
+          <div style="color:var(--clr-accent);font-size:.9rem;margin-bottom:.75rem;">{{getStars(t.rating)}}</div>
+          <p style="font-size:.9rem;line-height:1.75;color:var(--clr-text);font-style:italic;margin-bottom:1.5rem;">"{{t.comment}}"</p>
+          <div class="d-flex align-items-center gap-3">
+            <div style="width:42px;height:42px;border-radius:50%;background:var(--clr-primary);color:white;display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;flex-shrink:0;">{{t.name.charAt(0)}}</div>
+            <div>
+              <div style="font-weight:700;font-size:.9rem;color:var(--clr-navy);">{{t.name}}</div>
+              <div style="font-size:.78rem;color:var(--clr-text-muted);"><i class="bi bi-geo-alt me-1"></i>{{t.country}} · {{t.tourName}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section">
+  <div class="container">
+    <div class="row justify-content-center text-center">
+      <div class="col-lg-6" data-aos="fade-up">
+        <span class="section-label" style="color:var(--clr-secondary);">Stay Inspired</span>
+        <h2 class="section-title mt-2 mb-3" style="color:white;">Join 10,000+ Tunisia Lovers</h2>
+        <p style="color:rgba(255,255,255,.75);margin-bottom:2rem;line-height:1.7;">Get exclusive travel tips, seasonal offers, hidden gems, and insider Tunisia knowledge delivered to your inbox.</p>
+        <div class="d-flex gap-2 justify-content-center flex-wrap">
+          <input type="email" class="form-control" placeholder="Enter your email address" [(ngModel)]="newsletterEmail" style="max-width:320px;border-radius:50px;border:none;padding:.75rem 1.5rem;">
+          <button class="btn btn-gold btn-lg" style="border-radius:50px;" (click)="subscribe()" [disabled]="newsletterLoading">
+            <span *ngIf="!newsletterLoading"><i class="bi bi-send me-2"></i>Subscribe</span>
+            <span *ngIf="newsletterLoading"><span class="spinner-border spinner-border-sm me-1"></span>...</span>
+          </button>
+        </div>
+        <p *ngIf="newsletterMsg" class="mt-3 mb-0" style="color:rgba(255,255,255,.9);font-size:.875rem;"><i class="bi bi-check-circle me-1"></i>{{newsletterMsg}}</p>
+        <p style="font-size:.78rem;color:rgba(255,255,255,.45);margin-top:1rem;margin-bottom:0;">No spam. Unsubscribe at any time.</p>
+      </div>
+    </div>
+  </div>
+</section>

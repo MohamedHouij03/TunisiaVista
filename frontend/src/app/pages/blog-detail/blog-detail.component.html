@@ -1,0 +1,58 @@
+<div *ngIf="notFound" class="container text-center py-5"><h2>Post Not Found</h2><a routerLink="/blog" class="btn btn-primary mt-3">Back to Blog</a></div>
+<div *ngIf="post">
+  <div style="height:60vh;position:relative;overflow:hidden;">
+    <img [src]="post.coverImage" [alt]="post.title" style="width:100%;height:100%;object-fit:cover;">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,22,40,.2) 0%,rgba(10,22,40,.75) 100%);"></div>
+    <div class="container" style="position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);">
+      <span style="font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--clr-secondary);">{{post.category}}</span>
+      <h1 style="font-family:var(--font-heading);font-size:clamp(1.6rem,4vw,2.8rem);font-weight:700;color:white;margin:.5rem 0;">{{post.title}}</h1>
+      <div class="d-flex gap-3 flex-wrap">
+        <span style="color:rgba(255,255,255,.8);font-size:.875rem;"><i class="bi bi-person me-1"></i>{{post.authorName}}</span>
+        <span style="color:rgba(255,255,255,.8);font-size:.875rem;"><i class="bi bi-clock me-1"></i>{{post.readTime}} min read</span>
+      </div>
+    </div>
+  </div>
+  <div class="breadcrumb-section"><div class="container"><ol class="breadcrumb mb-0"><li class="breadcrumb-item"><a routerLink="/">Home</a></li><li class="breadcrumb-item"><a routerLink="/blog">Blog</a></li><li class="breadcrumb-item active">{{post.title}}</li></ol></div></div>
+  <div class="container py-5">
+    <div class="row g-5">
+      <div class="col-lg-8">
+        <p style="font-size:1.1rem;color:var(--clr-text-muted);line-height:1.85;font-style:italic;border-left:4px solid var(--clr-primary);padding-left:1.5rem;margin-bottom:2rem;">{{post.excerpt}}</p>
+        <div style="line-height:1.85;color:var(--clr-text);font-size:1rem;">
+          <p>Tunisia's charm lies in its extraordinary diversity. This ancient land, where Phoenician traders once built their greatest city, where Roman emperors built pleasure palaces, and where Berber families have maintained their unique traditions for millennia, offers travelers an experience impossible to find anywhere else on earth.</p>
+          <p>The {{post.category?.toLowerCase()}} scene in Tunisia reflects this rich cultural tapestry. Whether you're exploring the winding lanes of an ancient medina, watching the sun descend behind the Saharan dunes, or savoring the complex spices of a slow-cooked tagine, each moment carries the weight of history and the warmth of a living culture.</p>
+          <h3 style="font-family:var(--font-heading);color:var(--clr-navy);margin:2rem 0 1rem;">What Makes Tunisia Unique</h3>
+          <p>Unlike many North African destinations that have been reshaped by mass tourism, much of Tunisia retains a genuine authenticity. Small towns like Mahdia and Kelibia, mountain villages like Ain Draham, and oasis towns like Tozeur. These are places where real Tunisian life unfolds each day, and where visitors are welcomed not as tourists but as guests.</p>
+          <p>The landscape itself is staggering in its variety: within a single day's drive, you can pass from Mediterranean olive groves to lunar salt flats to the golden margins of the Sahara. Tunisia is a country that seems almost too good to be real, too concentrated in its wonders.</p>
+          <h3 style="font-family:var(--font-heading);color:var(--clr-navy);margin:2rem 0 1rem;">Practical Tips for Visitors</h3>
+          <p>The best time to visit depends on what you seek. Summer brings perfect beach conditions but can be extreme in the south. Spring and autumn offer ideal temperatures for exploring ancient sites and trekking. Winter transforms the south into a paradise for desert adventures under clear, cool skies.</p>
+          <p>Whatever season you choose, prepare to be surprised, delighted, and ultimately transformed by one of the Mediterranean's most underappreciated treasures.</p>
+        </div>
+        <div class="mt-4 pt-4" style="border-top:1px solid var(--clr-border);">
+          <div class="d-flex align-items-center gap-3">
+            <div style="width:50px;height:50px;border-radius:50%;background:var(--clr-primary);color:white;display:flex;align-items:center;justify-content:center;font-size:1rem;font-weight:700;">{{post.authorName.charAt(0)}}</div>
+            <div><div style="font-weight:700;color:var(--clr-navy);">{{post.authorName}}</div><div style="font-size:.82rem;color:var(--clr-text-muted);">Tunisia Travel Expert · TunisiaVista Team</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div style="position:sticky;top:90px;">
+          <h5 style="font-family:var(--font-heading);color:var(--clr-navy);" class="mb-3">Related Articles</h5>
+          <div class="d-flex flex-column gap-3">
+            <a *ngFor="let r of related" [routerLink]="['/blog', r.slug]" class="text-decoration-none d-flex gap-3" style="background:white;border:1px solid var(--clr-border);border-radius:var(--radius-md);padding:.75rem;transition:var(--transition);">
+              <img [src]="r.coverImage" [alt]="r.title" style="width:70px;height:70px;border-radius:var(--radius-sm);object-fit:cover;flex-shrink:0;">
+              <div>
+                <span style="font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--clr-primary);">{{r.category}}</span>
+                <div style="font-weight:600;font-size:.85rem;color:var(--clr-navy);line-height:1.3;margin-top:.2rem;">{{r.title}}</div>
+              </div>
+            </a>
+          </div>
+          <div class="mt-4 p-4" style="background:var(--clr-navy);border-radius:var(--radius-lg);text-align:center;">
+            <h6 style="color:white;font-family:var(--font-heading);">Ready to Experience Tunisia?</h6>
+            <p style="color:rgba(255,255,255,.7);font-size:.82rem;margin:.5rem 0 1rem;">Turn inspiration into your next adventure.</p>
+            <a routerLink="/tours" class="btn btn-gold w-100">Explore Tours</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

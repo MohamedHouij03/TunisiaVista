@@ -1,0 +1,82 @@
+# ============================================
+# Environment Variables (SENSITIVE — never commit)
+# ============================================
+.env
+.env.local
+.env.*.local
+**/.env
+**/.env.local
+**/.env.*.local
+
+# ============================================
+# Dependencies
+# ============================================
+node_modules/
+**/node_modules/
+
+# ============================================
+# Build Output
+# ============================================
+dist/
+**/dist/
+.angular/
+**/.angular/
+tmp/
+out-tsc/
+*.tsbuildinfo
+
+# ============================================
+# Logs
+# ============================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ============================================
+# Media / Personal Assets
+# Photos placed locally for development should
+# not be pushed to the remote repository.
+# ============================================
+frontend/src/assets/images/*
+!frontend/src/assets/images/.gitkeep
+
+# ============================================
+# OS Generated Files
+# ============================================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# ============================================
+# IDE / Editor
+# ============================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ============================================
+# Testing & Coverage
+# ============================================
+coverage/
+**/coverage/
+
+# ============================================
+# Misc
+# ============================================
+.cache/
+*.bak
+*.tmp

@@ -1,0 +1,42 @@
+<div class="page-header"><div class="container"><nav aria-label="breadcrumb" class="mb-3"><ol class="breadcrumb" style="background:transparent;padding:0;margin:0;"><li class="breadcrumb-item"><a routerLink="/" style="color:rgba(255,255,255,.7);text-decoration:none;">Home</a></li><li class="breadcrumb-item active" style="color:rgba(255,255,255,.9);">About Us</li></ol></nav><h1 class="page-header-title mb-2">About TunisiaVista</h1><p class="page-header-subtitle">Tunisia's premier travel agency since 2009.</p></div></div>
+<section class="section-pad"><div class="container">
+  <div class="row g-5 align-items-center">
+    <div class="col-lg-6" data-aos="fade-right">
+      <span class="section-label">Our Story</span>
+      <h2 class="section-title mt-2 mb-4">Born From a Love of Tunisia</h2>
+      <p style="color:var(--clr-text-muted);line-height:1.85;">TunisiaVista was founded in 2009 by Khaled Ben Youssef, a passionate Tunisian guide frustrated that most agencies presented Tunisia as a beach-only destination. He set out to create an agency that reveals the full depth of Tunisian culture and landscape.</p>
+      <p style="color:var(--clr-text-muted);line-height:1.85;margin-top:1rem;">Today, TunisiaVista is recognized as one of Tunisia's most respected travel companies, with partnerships with the National Tourism Board, UNESCO, and leading luxury hotels across the country.</p>
+      <div class="d-flex flex-wrap gap-3 mt-4">
+        <div *ngFor="let s of [{v:'15+',l:'Years'},{v:'50K+',l:'Travelers'},{v:'4.9★',l:'Rating'},{v:'IATA',l:'Certified'}]" style="text-align:center;padding:1rem 1.5rem;background:var(--clr-off-white);border-radius:var(--radius-md);">
+          <div style="font-family:var(--font-heading);font-size:1.4rem;font-weight:700;color:var(--clr-primary);">{{s.v}}</div>
+          <div style="font-size:.75rem;color:var(--clr-text-muted);">{{s.l}}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-6" data-aos="fade-left" data-aos-delay="150">
+      <img src="assets/images/tunis.jpg" alt="Team" style="width:100%;height:420px;object-fit:cover;border-radius:var(--radius-xl);">
+    </div>
+  </div>
+</div></section>
+<section class="section-pad section-light"><div class="container">
+  <div class="row g-4 mb-5">
+    <div class="col-md-6" *ngFor="let v of [{t:'Our Mission',d:'To make the real Tunisia accessible to every traveler, not just resorts, but ancient medinas, desert silence, family-owned restaurants, and authentic artisan workshops.',i:'bi bi-bullseye'},{t:'Our Vision',d:'To establish Tunisia as one of the world\'s top cultural travel destinations and grow tourism in a way that benefits local communities across the country.',i:'bi bi-eye'}]" data-aos="fade-up">
+      <div class="card p-4 h-100" style="border-radius:var(--radius-lg);">
+        <i [class]="v.i + ' mb-3'" style="font-size:1.8rem;color:var(--clr-primary);"></i>
+        <h4 style="font-family:var(--font-heading);color:var(--clr-navy);">{{v.t}}</h4>
+        <p style="color:var(--clr-text-muted);line-height:1.7;margin:0;">{{v.d}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="text-center mb-5" data-aos="fade-up"><span class="section-label">The Team</span><h2 class="section-title mt-2 mb-3">Meet Our Experts</h2><div class="divider-gold"></div></div>
+  <div class="row g-4 justify-content-center">
+    <div class="col-md-6 col-lg-3" *ngFor="let m of team" data-aos="fade-up">
+      <div class="text-center">
+        <div style="width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--clr-primary),var(--clr-primary-lt));display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;font-size:1.5rem;font-weight:700;color:white;box-shadow:var(--shadow-primary);">{{m.avatar}}</div>
+        <h5 style="font-family:var(--font-heading);color:var(--clr-navy);margin-bottom:.25rem;">{{m.name}}</h5>
+        <div style="font-size:.78rem;font-weight:700;color:var(--clr-secondary);text-transform:uppercase;letter-spacing:.05em;margin-bottom:.5rem;">{{m.role}}</div>
+        <p style="font-size:.85rem;color:var(--clr-text-muted);">{{m.bio}}</p>
+      </div>
+    </div>
+  </div>
+</div></section>

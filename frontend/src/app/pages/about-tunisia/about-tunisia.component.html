@@ -1,0 +1,93 @@
+<div class="page-header">
+  <div class="container">
+    <nav aria-label="breadcrumb" class="mb-3"><ol class="breadcrumb" style="background:transparent;padding:0;margin:0;"><li class="breadcrumb-item"><a routerLink="/" style="color:rgba(255,255,255,.7);text-decoration:none;">Home</a></li><li class="breadcrumb-item active" style="color:rgba(255,255,255,.9);">About Tunisia</li></ol></nav>
+    <h1 class="page-header-title mb-2">Discover Tunisia</h1>
+    <p class="page-header-subtitle">Three millennia of history, extraordinary landscapes, and one of the world's warmest peoples.</p>
+  </div>
+</div>
+
+<section class="section-pad">
+  <div class="container">
+    <div class="row g-5 align-items-center">
+      <div class="col-lg-6" data-aos="fade-right">
+        <span class="section-label">Geography</span>
+        <h2 class="section-title mt-2 mb-4">A Land of Extraordinary Contrast</h2>
+        <p style="color:var(--clr-text-muted);line-height:1.85;">Tunisia occupies a strategic position on the North African Mediterranean coast, stretching from the green Kroumirie mountains in the northwest to the Grand Erg Oriental's sand sea in the south. Despite its modest size (163,610 km²), Tunisia packs an astonishing range of landscapes.</p>
+        <p style="color:var(--clr-text-muted);line-height:1.85;margin-top:1rem;">The country's geography divides naturally into distinct zones: fertile Tell region in the north, the Sahel coastal plains, the high Dorsal mountain chain, and the vast pre-Saharan and Saharan regions of the south. Over 1,300km of coastline frames the eastern edge, offering beaches that range from Mediterranean crystal clarity to warm Gulf of Gabes shallows.</p>
+        <div class="row g-3 mt-3">
+          <div class="col-6" *ngFor="let stat of [{v:'163,610 km²',l:'Total Area'},{v:'11.7M',l:'Population'},{v:'1,300+ km',l:'Coastline'},{v:'8',l:'UNESCO Sites'}]">
+            <div style="background:var(--clr-off-white);border-radius:var(--radius-md);padding:1rem;text-align:center;">
+              <div style="font-family:var(--font-heading);font-size:1.3rem;font-weight:700;color:var(--clr-primary);">{{stat.v}}</div>
+              <div style="font-size:.78rem;color:var(--clr-text-muted);font-weight:500;">{{stat.l}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-6" data-aos="fade-left" data-aos-delay="150">
+        <img src="assets/images/kairouan.jpg" alt="Tunisia Landscape" style="width:100%;height:420px;object-fit:cover;border-radius:var(--radius-xl);" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-pad section-sand">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">Culture & Heritage</span>
+      <h2 class="section-title mt-2 mb-3">3,000 Years of Civilization</h2>
+      <div class="divider-gold"></div>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-4" *ngFor="let item of [{t:'Phoenician Foundations',d:'Carthage, founded around 814 BCE by Queen Dido of Tyre, became the greatest trading empire of the ancient Mediterranean.',i:'bi bi-columns'},{t:'Roman Grandeur',d:'Under Roman rule, North Africa was the breadbasket of the empire. El Djem\'s colossal amphitheatre rivals Rome\'s Colosseum.',i:'bi bi-bank'},{t:'Arab Golden Age',d:'The Arab conquest of 670 CE brought Islam and founded the holy city of Kairouan, the fourth holiest city in Islam.',i:'bi bi-moon-stars'},{t:'Berber Identity',d:'Tunisia\'s indigenous Berber (Amazigh) people maintain their language, crafts, and traditions across mountain villages and oases.',i:'bi bi-people'},{t:'Ottoman Legacy',d:'The Husainid Beys left remarkable mosques, palaces, and the sophisticated café culture of Tunis\'s historic quarters.',i:'bi bi-building'},{t:'Modern Republic',d:'Independent since 1956, Tunisia was the birthplace of the Arab Spring in 2010 and has built a vibrant democratic culture.',i:'bi bi-flag'}]" data-aos="fade-up" [attr.data-aos-delay]="0">
+        <div class="card p-4 h-100" style="border-radius:var(--radius-lg);border:1px solid var(--clr-border);">
+          <div style="width:46px;height:46px;background:rgba(27,79,138,.1);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;"><i [class]="item.i" style="color:var(--clr-primary);font-size:1.2rem;"></i></div>
+          <h5 style="font-family:var(--font-heading);color:var(--clr-navy);font-size:1rem;">{{item.t}}</h5>
+          <p style="font-size:.875rem;color:var(--clr-text-muted);line-height:1.65;margin:0;">{{item.d}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UNESCO Sites -->
+<section class="section-pad">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">World Heritage</span>
+      <h2 class="section-title mt-2 mb-3">8 UNESCO World Heritage Sites</h2>
+      <div class="divider-gold"></div>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3" *ngFor="let site of unescoSites; let i = index" data-aos="fade-up" [attr.data-aos-delay]="(i%4)*60">
+        <div style="background:white;border:1px solid var(--clr-border);border-radius:var(--radius-lg);padding:1.5rem;text-align:center;transition:var(--transition);height:100%;" class="card-hover">
+          <div style="width:52px;height:52px;background:linear-gradient(135deg,var(--clr-primary),var(--clr-primary-lt));border-radius:12px;display:flex;align-items:center;justify-content:center;margin:0 auto 1rem;box-shadow:var(--shadow-primary);"><i [class]="site.icon + ' text-white fs-5'"></i></div>
+          <h6 style="font-family:var(--font-heading);color:var(--clr-navy);font-size:.95rem;margin-bottom:.4rem;">{{site.name}}</h6>
+          <span style="font-size:.72rem;color:var(--clr-text-muted);">Listed {{site.year}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Climate -->
+<section class="section-pad section-light">
+  <div class="container">
+    <div class="text-center mb-5" data-aos="fade-up">
+      <span class="section-label">When to Visit</span>
+      <h2 class="section-title mt-2 mb-3">Tunisia's Climate Zones</h2>
+      <div class="divider-gold"></div>
+    </div>
+    <div class="row g-4">
+      <div class="col-md-6 col-lg-3" *ngFor="let z of climateZones" data-aos="fade-up">
+        <div style="background:white;border:1px solid var(--clr-border);border-radius:var(--radius-lg);padding:1.5rem;height:100%;">
+          <div style="width:44px;height:44px;background:rgba(27,79,138,.08);border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:1rem;"><i [class]="z.icon" [style.color]="z.color" style="font-size:1.2rem;"></i></div>
+          <h6 style="font-family:var(--font-heading);color:var(--clr-navy);">{{z.name}}</h6>
+          <p style="font-size:.85rem;color:var(--clr-text-muted);line-height:1.6;margin:0;">{{z.desc}}</p>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-5" data-aos="fade-up">
+      <a routerLink="/tours" class="btn btn-primary btn-lg"><i class="bi bi-suitcase me-2"></i>Plan Your Visit</a>
+    </div>
+  </div>
+</section>

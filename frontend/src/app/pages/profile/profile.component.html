@@ -1,0 +1,21 @@
+<div class="page-header"><div class="container"><nav aria-label="breadcrumb" class="mb-3"><ol class="breadcrumb" style="background:transparent;padding:0;margin:0;"><li class="breadcrumb-item"><a routerLink="/" style="color:rgba(255,255,255,.7);text-decoration:none;">Home</a></li><li class="breadcrumb-item active" style="color:rgba(255,255,255,.9);">My Profile</li></ol></nav><h1 class="page-header-title">My Profile</h1></div></div>
+<div class="container py-5">
+  <div class="row justify-content-center"><div class="col-lg-7">
+    <div class="card p-4 p-md-5" style="border-radius:var(--radius-xl);box-shadow:var(--shadow-lg);">
+      <div class="d-flex align-items-center gap-4 mb-4 pb-4" style="border-bottom:1px solid var(--clr-border);">
+        <div style="width:72px;height:72px;border-radius:50%;background:var(--clr-primary);color:white;display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:700;">{{user?.firstName?.charAt(0)}}{{user?.lastName?.charAt(0)}}</div>
+        <div><h4 style="font-family:var(--font-heading);color:var(--clr-navy);margin:0;">{{user?.firstName}} {{user?.lastName}}</h4><p style="color:var(--clr-text-muted);margin:.25rem 0;font-size:.875rem;">{{user?.email}}</p></div>
+      </div>
+      <div *ngIf="successMsg" style="background:rgba(5,150,105,.1);border:1px solid rgba(5,150,105,.3);border-radius:var(--radius-md);color:var(--clr-success);padding:.875rem;margin-bottom:1.5rem;">{{successMsg}}</div>
+      <div class="row g-3">
+        <div class="col-md-6"><label class="form-label">First Name</label><input type="text" class="form-control" [(ngModel)]="form.firstName"></div>
+        <div class="col-md-6"><label class="form-label">Last Name</label><input type="text" class="form-control" [(ngModel)]="form.lastName"></div>
+        <div class="col-12"><label class="form-label">Phone</label><input type="tel" class="form-control" [(ngModel)]="form.phone" placeholder="+216..."></div>
+        <div class="col-12 mt-2"><button class="btn btn-primary w-100" (click)="save()" [disabled]="saving">
+          <span *ngIf="!saving"><i class="bi bi-save me-2"></i>Save Changes</span>
+          <span *ngIf="saving"><span class="spinner-border spinner-border-sm me-2"></span>Saving...</span>
+        </button></div>
+      </div>
+    </div>
+  </div></div>
+</div>

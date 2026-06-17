@@ -1,0 +1,128 @@
+<!-- Not Found -->
+<div *ngIf="notFound" class="container text-center py-5">
+  <h2>Destination Not Found</h2>
+  <a routerLink="/destinations" class="btn btn-primary mt-3">Back to Destinations</a>
+</div>
+
+<!-- Destination Detail -->
+<div *ngIf="destination">
+  <!-- Hero -->
+  <div style="height:70vh; position:relative; overflow:hidden;">
+    <img [src]="destination.coverImage" [alt]="destination.name" style="width:100%;height:100%;object-fit:cover;" onerror="this.parentElement.style.background='linear-gradient(135deg,#1B4F8A,#2d6db5)'">
+    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,22,40,.3) 0%,rgba(10,22,40,.75) 100%);"></div>
+    <div class="container" style="position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);">
+      <span class="badge-region mb-2 d-inline-block">{{destination.region}}</span>
+      <h1 style="font-family:var(--font-heading);font-size:clamp(2rem,5vw,3.5rem);font-weight:700;color:white;margin:0;">{{destination.name}}</h1>
+      <div class="d-flex gap-3 mt-2 flex-wrap">
+        <span style="color:rgba(255,255,255,.85);font-size:.9rem;"><i class="bi bi-star-fill me-1" style="color:var(--clr-accent);"></i>{{destination.rating}} Rating</span>
+        <span style="color:rgba(255,255,255,.85);font-size:.9rem;"><i class="bi bi-calendar3 me-1"></i>Best: {{destination.bestSeason}}</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Breadcrumb -->
+  <div class="breadcrumb-section">
+    <div class="container">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+        <li class="breadcrumb-item"><a routerLink="/destinations">Destinations</a></li>
+        <li class="breadcrumb-item active">{{destination.name}}</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- Content -->
+  <div class="container py-5">
+    <div class="row g-5">
+      <!-- Main -->
+      <div class="col-lg-8">
+        <h2 style="font-family:var(--font-heading);color:var(--clr-navy);" class="mb-3">About {{destination.name}}</h2>
+        <p style="color:var(--clr-text-muted);line-height:1.85;font-size:1.05rem;">{{destination.description}}</p>
+
+        <!-- Highlights -->
+        <div class="mt-4">
+          <h4 style="font-family:var(--font-heading);color:var(--clr-navy);">Top Highlights</h4>
+          <div class="row g-2 mt-2">
+            <div class="col-md-6" *ngFor="let h of destination.highlights">
+              <div class="d-flex align-items-center gap-2 p-2" style="background:var(--clr-off-white);border-radius:var(--radius-md);">
+                <i class="bi bi-check-circle-fill" style="color:var(--clr-primary);font-size:1rem;"></i>
+                <span style="font-size:.875rem;font-weight:500;">{{h}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activities -->
+        <div class="mt-4">
+          <h4 style="font-family:var(--font-heading);color:var(--clr-navy);">Activities</h4>
+          <div class="d-flex flex-wrap gap-2 mt-2">
+            <span *ngFor="let a of destination.activities" style="background:rgba(27,79,138,.08);color:var(--clr-primary);border:1px solid rgba(27,79,138,.2);padding:.3rem .9rem;border-radius:50px;font-size:.8rem;font-weight:600;">
+              {{a}}
+            </span>
+          </div>
+        </div>
+
+        <!-- Gallery -->
+        <div class="mt-5">
+          <h4 style="font-family:var(--font-heading);color:var(--clr-navy);" class="mb-3">Photo Gallery</h4>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem;">
+            <div *ngFor="let img of galleryImages" class="gallery-item" style="height:160px;">
+              <img [src]="img" alt="Gallery" class="gallery-img" style="width:100%;height:100%;object-fit:cover;" loading="lazy">
+              <div class="gallery-overlay"><i class="bi bi-zoom-in"></i></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Map Placeholder -->
+        <div class="mt-5">
+          <h4 style="font-family:var(--font-heading);color:var(--clr-navy);" class="mb-3">Location</h4>
+          <div style="height:300px;background:linear-gradient(135deg,var(--clr-sand),var(--clr-sand-dk));border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;border:2px dashed var(--clr-border);">
+            <div class="text-center" style="color:var(--clr-text-muted);">
+              <i class="bi bi-map" style="font-size:2.5rem;"></i>
+              <p class="mt-2 mb-0">Interactive map (Google Maps integration)</p>
+              <small>{{destination.name}}, Tunisia</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sidebar -->
+      <div class="col-lg-4">
+        <!-- Info Card -->
+        <div class="card p-4 mb-4" style="border-radius:var(--radius-lg); position:sticky; top:90px;">
+          <h5 style="font-family:var(--font-heading);color:var(--clr-navy);border-bottom:1px solid var(--clr-border);padding-bottom:.75rem;margin-bottom:.75rem;">Quick Info</h5>
+          <div class="d-flex flex-column gap-3">
+            <div class="d-flex justify-content-between">
+              <span style="font-size:.85rem;color:var(--clr-text-muted);">Region</span>
+              <span style="font-size:.85rem;font-weight:600;color:var(--clr-navy);">{{destination.region}}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span style="font-size:.85rem;color:var(--clr-text-muted);">Best Season</span>
+              <span style="font-size:.85rem;font-weight:600;color:var(--clr-navy);">{{destination.bestSeason}}</span>
+            </div>
+            <div class="d-flex justify-content-between">
+              <span style="font-size:.85rem;color:var(--clr-text-muted);">Rating</span>
+              <span style="font-size:.85rem;font-weight:600;color:var(--clr-accent);">★ {{destination.rating}} / 5</span>
+            </div>
+          </div>
+          <a routerLink="/tours" class="btn btn-primary w-100 mt-4">Book a Tour</a>
+          <a routerLink="/contact" class="btn btn-outline-primary w-100 mt-2">Ask a Question</a>
+        </div>
+
+        <!-- Related Tours -->
+        <div>
+          <h5 style="font-family:var(--font-heading);color:var(--clr-navy);" class="mb-3">Related Tours</h5>
+          <div class="d-flex flex-column gap-3">
+            <a *ngFor="let t of relatedTours" [routerLink]="['/tours', t.slug]" class="text-decoration-none d-flex gap-3 align-items-center p-2" style="background:white;border:1px solid var(--clr-border);border-radius:var(--radius-md);transition:var(--transition);">
+              <img [src]="t.coverImage" [alt]="t.name" style="width:64px;height:64px;border-radius:var(--radius-sm);object-fit:cover;" loading="lazy">
+              <div>
+                <div style="font-weight:600;font-size:.875rem;color:var(--clr-navy);">{{t.name}}</div>
+                <div style="font-size:.78rem;color:var(--clr-text-muted);">{{t.duration}} days · From {{t.price}} TND</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

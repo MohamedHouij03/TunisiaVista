@@ -1,0 +1,33 @@
+<div class="page-header">
+  <div class="container">
+    <nav aria-label="breadcrumb" class="mb-3"><ol class="breadcrumb" style="background:transparent;padding:0;margin:0;"><li class="breadcrumb-item"><a routerLink="/" style="color:rgba(255,255,255,.7);text-decoration:none;">Home</a></li><li class="breadcrumb-item active" style="color:rgba(255,255,255,.9);">Experiences</li></ol></nav>
+    <h1 class="page-header-title mb-2">Unforgettable Tunisia Experiences</h1>
+    <p class="page-header-subtitle">{{experiences.length}} extraordinary activities waiting for you, adventures for every spirit.</p>
+  </div>
+</div>
+<section class="section-pad">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-4 col-md-6" *ngFor="let exp of experiences; let i = index" data-aos="fade-up" [attr.data-aos-delay]="(i%3)*80">
+        <a routerLink="/tours" class="text-decoration-none">
+          <div class="experience-card" [style.backgroundImage]="'url(' + exp.coverImage + ')'" style="min-height:380px;">
+            <div class="exp-content" style="padding:1.75rem;">
+              <div class="exp-icon mb-3"><i [class]="exp.icon + ' fs-4'"></i></div>
+              <h4 style="color:white;font-family:var(--font-heading);margin-bottom:.5rem;">{{exp.title}}</h4>
+              <p style="font-size:.875rem;color:rgba(255,255,255,.85);line-height:1.65;margin-bottom:1.25rem;">{{exp.description}}</p>
+              <span style="display:inline-flex;align-items:center;gap:.4rem;background:rgba(255,255,255,.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.25);color:white;font-size:.78rem;font-weight:600;padding:.4rem 1rem;border-radius:50px;">
+                View Tours <i class="bi bi-arrow-right ms-1"></i>
+              </span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+    <div class="text-center mt-5" style="background:var(--clr-off-white);padding:3rem;border-radius:var(--radius-xl);" data-aos="fade-up">
+      <h3 style="font-family:var(--font-heading);color:var(--clr-navy);">Can't Find Your Perfect Experience?</h3>
+      <p style="color:var(--clr-text-muted);max-width:500px;margin:.75rem auto 1.5rem;">We create bespoke itineraries tailored exactly to your interests, travel style, and budget.</p>
+      <a routerLink="/contact" class="btn btn-primary btn-lg me-3">Contact Our Experts</a>
+      <a routerLink="/tours" class="btn btn-outline-primary btn-lg">Browse All Tours</a>
+    </div>
+  </div>
+</section>
