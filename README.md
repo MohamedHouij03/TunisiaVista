@@ -23,17 +23,7 @@
 ## 🎥 Demo
 
 <div align="center">
-
-<!--
-  Replace the placeholder below with your demo video.
-  Option A — Upload a GIF/MP4 to the repo (e.g. docs/demo.gif) and reference it:
-    ![Demo](docs/demo.gif)
-
-  Option B — Link to a YouTube video using its thumbnail:
-    [![Watch the demo](https://img.youtube.com/vi/VIDEO_ID/maxresdefault.jpg)](https://www.youtube.com/watch?v=VIDEO_ID)
--->
-
-> 📺 **Demo video coming soon** — check back for a full walkthrough of the platform.
+    [[Watch the demo](https://img.youtube.com/vi/oQHw0x583Cc/maxresdefault.jpg)](https://www.youtube.com/watch?v=oQHw0x583Cc)
 
 </div>
 
