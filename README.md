@@ -16,20 +16,15 @@
 
 [Features](#-features) • [Demo](#-demo) • [Quick Start](#-quick-start) • [API Reference](#-api-reference) • [Tech Stack](#-technology-stack)
 
-</div>
+
+
 
 ---
 
-## 🎥 Demo
+## Demo Video
+[![Demo Video](https://img.youtube.com/vi/oQHw0x583Cc/maxresdefault.jpg)](https://www.youtube.com/watch?v=oQHw0x583Cc) 
+## Features
 
-<div align="center">
-    [[Watch the demo](https://img.youtube.com/vi/oQHw0x583Cc/maxresdefault.jpg)](https://www.youtube.com/watch?v=oQHw0x583Cc)
-
-</div>
-
----
-
-## ✨ Features
 
 ### 🖥️ Frontend
 - 🎨 Modern, responsive UI built with **Angular 17 Standalone Components**
